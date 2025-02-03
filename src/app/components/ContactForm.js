@@ -12,6 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default function ContactForm({ onClose, onSubmit }) {
   const [name, setName] = useState('');
   const [phoneOrEmail, setPhoneOrEmail] = useState('');
+  const [location, setLocation] = useState('');
   const [message, setMessage] = useState('');
 
   const validateEmail = (email) => {
@@ -44,7 +45,7 @@ export default function ContactForm({ onClose, onSubmit }) {
     // Insert data into Supabase
     const { data, error } = await supabase
       .from('PotentialCustomer')
-      .insert([{ name, phoneOrEmail }]);
+      .insert([{ name, phoneOrEmail, location }]);
 
     if (error) {
       console.error('Error inserting data:', error);
@@ -54,7 +55,8 @@ export default function ContactForm({ onClose, onSubmit }) {
       setMessage('Form submitted successfully!');
       setName('');
       setPhoneOrEmail('');
-      onSubmit({ name, phoneOrEmail }); // Pass customer details to parent component
+      setLocation('');
+      onSubmit({ name, phoneOrEmail, location }); // Pass customer details to parent component
       onClose(); // Close the contact form
     }
   };
@@ -81,6 +83,34 @@ export default function ContactForm({ onClose, onSubmit }) {
           onChange={(e) => setPhoneOrEmail(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label htmlFor="location">Location</label>
+        <select
+          id="location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className={styles.input}
+          required
+        >
+          <option value="">Select your state</option>
+          <option value="Johor">Johor</option>
+          <option value="Kedah">Kedah</option>
+          <option value="Kelantan">Kelantan</option>
+          <option value="Kuala Lumpur">Kuala Lumpur</option>
+          <option value="Labuan">Labuan</option>
+          <option value="Melaka">Melaka</option>
+          <option value="Negeri Sembilan">Negeri Sembilan</option>
+          <option value="Pahang">Pahang</option>
+          <option value="Perak">Perak</option>
+          <option value="Perlis">Perlis</option>
+          <option value="Pulau Pinang">Pulau Pinang</option>
+          <option value="Putrajaya">Putrajaya</option>
+          <option value="Sabah">Sabah</option>
+          <option value="Sarawak">Sarawak</option>
+          <option value="Selangor">Selangor</option>
+          <option value="Terengganu">Terengganu</option>
+        </select>
       </div>
       <button type="submit">Submit</button>
       {message && <p className={styles.errorMessage}>{message}</p>}
