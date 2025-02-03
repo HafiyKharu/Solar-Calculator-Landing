@@ -1,0 +1,92 @@
+@font-face {
+  font-family: 'Corbel Light';
+  src: url('/path/to/corbel-light.woff2') format('woff2'),
+       url('/path/to/corbel-light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+:root {
+  --primary-yellow: #fcd913;
+  --black: #000000;
+  --white: #ffffff;
+  --light-gray: #d3d3d3;
+  --calculator-background: var(--white);
+  --calculator-border: var(--light-gray);
+  --calculator-shadow: rgba(0, 0, 0, 0.1);
+  --button-background: var(--primary-yellow);
+  --button-hover: #e6c812;
+  --button-text: var(--black);
+  --input-border: var(--light-gray);
+  --input-focus-border: var(--primary-yellow);
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--black);
+  background: var(--white);
+  font-family: 'Corbel Light', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 32px;
+}
+
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 28px;
+}
+
+h3 {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+}
+
+h4 {
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 18px;
+  }
+}
