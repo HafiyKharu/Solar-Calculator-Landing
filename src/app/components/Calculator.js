@@ -7,6 +7,7 @@ const Calculator = ({ onShowPopup, onCalculate }) => {
   const [savings, setSavings] = useState(0);
   const [billMonthlyPayments, setBillMonthlyPayments] = useState(0);
   const [loanMonthlyPayments, setLoanMonthlyPayments] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const T = 0.509; // TNB Tariff: RM0.509/kWh
   const SPC = 3000; // Solar Panel Cost: RM3000/kWp
@@ -15,6 +16,11 @@ const Calculator = ({ onShowPopup, onCalculate }) => {
   const Ts = bill * 0.3; // Target Savings: 30% of current bill
 
   const calculateMonthlyPayments = () => {
+    if (bill <= 0 || isNaN(bill)) {
+      setErrorMessage('Please enter a valid bill amount greater than 0.');
+      return;
+    }
+
     const Me = bill / T; // Monthly Energy (kWh) = Monthly Bill ÷ RM0.509
     const De = Me / 30; // Daily Energy = Monthly Energy ÷ 30
     const SS = De / (p * 0.8); // System Size (kWp) = Daily Energy ÷ (3 hours × 0.8)
@@ -34,6 +40,7 @@ const Calculator = ({ onShowPopup, onCalculate }) => {
     setSavings(Ts);
     setBillMonthlyPayments(TMP);
     setLoanMonthlyPayments(payments);
+    setErrorMessage('');
     onShowPopup(); // Call the callback function to show the contact form
     onCalculate({ savings: Ts, billMonthlyPayments: TMP, loanMonthlyPayments: payments });
   };
@@ -47,9 +54,13 @@ const Calculator = ({ onShowPopup, onCalculate }) => {
           type="number"
           id="bill"
           value={bill}
-          onChange={(e) => setBill(e.target.value)}
+          onChange={(e) => setBill(parseFloat(e.target.value))}
+          min="0.01"
+          step="0.01"
+          required
         />
       </div>
+      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <button type='submit' onClick={calculateMonthlyPayments}>Calculate Savings</button>
     </div>
   );

@@ -54,7 +54,9 @@ export default function Home() {
           <div className={styles.customerDetails}>
             <p><strong>Name:</strong> {customerDetails.name}</p>
             <p><strong>Contact:</strong> {customerDetails.phoneOrEmail}</p>
+            <p><strong>Location:</strong> {customerDetails.location}</p>
           </div>
+          <br/>
           <table>
             <tbody>
               <tr>
