@@ -6,9 +6,9 @@ export default function Footer() {
       <div className={styles.container}>
         <p>&copy; {new Date().getFullYear()} Rooftop Energy. All rights reserved.</p>
         <nav>
-          <a href="/privacy-policy">Privacy Policy</a>
-          <a href="/terms-of-service">Terms of Service</a>
-          <a href="/contact">Contact Us</a>
+          <a href="https://rooftop.my/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <a href="https://rooftop.my/" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+          <a href="https://rooftop.my/" target="_blank" rel="noopener noreferrer">Contact Us</a>
         </nav>
       </div>
     </footer>

@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Corbel Light';
+  src: url('/fonts/Corbel-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
 .contactForm {
   background: var(--calculator-background);
   border: 1px solid var(--calculator-border);
@@ -49,4 +55,8 @@
   margin-top: 16px;
   text-align: center;
   font-family: 'Corbel Light', Arial, sans-serif;
+}
+
+.errorMessage {
+  color: red;
 }

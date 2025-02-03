@@ -5,17 +5,42 @@ import { createClient } from '@supabase/supabase-js';
 import styles from '../styles/contactform.module.css';
 
 // Initialize Supabase client
-const supabaseUrl = 'https://gmgpggofykhjnlknuqtb.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZ3BnZ29meWtoam5sa251cXRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg1NTg5MDMsImV4cCI6MjA1NDEzNDkwM30.SBvnnQJNkGmjpkp-cgpYyBaD63D7OLVtdOq6kgttmIs'
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = 'https://gmgpggofykhjnlknuqtb.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZ3BnZ29meWtoam5sa251cXRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg1NTg5MDMsImV4cCI6MjA1NDEzNDkwM30.SBvnnQJNkGmjpkp-cgpYyBaD63D7OLVtdOq6kgttmIs';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default function ContactForm() {
+export default function ContactForm({ onClose, onSubmit }) {
   const [name, setName] = useState('');
   const [phoneOrEmail, setPhoneOrEmail] = useState('');
   const [message, setMessage] = useState('');
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const re = /^\+?(\d.*){3,}$/;
+    return re.test(String(phoneNumber));
+  };
+
+  const validateName = (name) => {
+    const re = /^[A-Za-z\s]+$/;
+    return re.test(String(name));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(phoneOrEmail) && !validatePhoneNumber(phoneOrEmail)) {
+      setMessage('Please enter a valid email or phone number.');
+      return;
+    }
+    if (!validateName(name)) {
+      setMessage('Please enter a valid name with alphabetic characters only.');
+      return;
+    }
+
     // Insert data into Supabase
     const { data, error } = await supabase
       .from('PotentialCustomer')
@@ -29,6 +54,8 @@ export default function ContactForm() {
       setMessage('Form submitted successfully!');
       setName('');
       setPhoneOrEmail('');
+      onSubmit({ name, phoneOrEmail }); // Pass customer details to parent component
+      onClose(); // Close the contact form
     }
   };
 
@@ -56,7 +83,7 @@ export default function ContactForm() {
         />
       </div>
       <button type="submit">Submit</button>
-      {message && <p>{message}</p>}
+      {message && <p className={styles.errorMessage}>{message}</p>}
     </form>
   );
 }

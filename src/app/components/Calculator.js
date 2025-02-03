@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from '../styles/calculator.module.css';
 
-const Calculator = () => {
+const Calculator = ({ onShowPopup, onCalculate }) => {
   const [bill, setBill] = useState(0);
   const [savings, setSavings] = useState(0);
   const [billMonthlyPayments, setBillMonthlyPayments] = useState(0);
@@ -34,6 +34,8 @@ const Calculator = () => {
     setSavings(Ts);
     setBillMonthlyPayments(TMP);
     setLoanMonthlyPayments(payments);
+    onShowPopup(); // Call the callback function to show the contact form
+    onCalculate({ savings: Ts, billMonthlyPayments: TMP, loanMonthlyPayments: payments });
   };
 
   return (
@@ -49,32 +51,6 @@ const Calculator = () => {
         />
       </div>
       <button type='submit' onClick={calculateMonthlyPayments}>Calculate Savings</button>
-      {savings > 0 && (
-        <div className={styles.result}>
-          <h3>Calculation Results</h3>
-          <table>
-            <tbody>
-              <tr>
-                <td>Target Monthly Savings:</td>
-                <td>RM{savings.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td>Target Bill Monthly Payment:</td>
-                <td>RM{billMonthlyPayments.toFixed(2)}</td>
-              </tr>
-              <tr>
-                <td colSpan="2">Monthly Payments for 5 Years:</td>
-              </tr>
-              {loanMonthlyPayments.map((payment, index) => (
-                <tr key={index}>
-                  <td>Year {index + 1}:</td>
-                  <td>RM{payment.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 };
