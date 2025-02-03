@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.2rem;
+  background-color: var(--primary-yellow);
+  color: var(--black);
+  border-radius: 0.5rem;
+}
+
+.logo img {
+  height: 3rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav a {
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: var(--button-hover);
+}
